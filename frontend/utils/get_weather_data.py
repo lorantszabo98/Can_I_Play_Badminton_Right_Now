@@ -9,29 +9,37 @@ def get_weather_data(lat, lon):
     # Construct the API URL
     url = f'http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={OPEN_WEATHER_API_KEY}'
 
-    # Send a GET request to the API
-    response = requests.get(url)
+    try:
+        # Send a GET request to the API
+        response = requests.get(url)
 
-    if response.status_code == 200:
+        if response.status_code == 200:
 
-        data = response.json()
-        # Extract relevant weather information
-        weather_description = data['weather'][0]['description']
-        temperature = data['main']['temp']
-        humidity = data['main']['humidity']
-        wind_speed = data['wind']['speed']
+            data = response.json()
+            # Extract relevant weather information
+            weather_description = data['weather'][0]['description']
+            temperature = data['main']['temp']
+            humidity = data['main']['humidity']
+            wind_speed = data['wind']['speed']
 
-        # Print the weather information
-        # print(f'Weather in {city}:')
-        print(f'Description: {weather_description}')
-        print(f'Temperature: {temperature} K')
-        print(f'Humidity: {humidity}%')
-        print(f'Wind Speed: {wind_speed} m/s')
+            # Print the weather information
+            # print(f'Weather in {city}:')
+            print(f'Description: {weather_description}')
+            print(f'Temperature: {temperature} K')
+            print(f'Humidity: {humidity}%')
+            print(f'Wind Speed: {wind_speed} m/s')
 
-        return weather_description, temperature, humidity, wind_speed
+            return weather_description, temperature, humidity, wind_speed
 
-    else:
-        print('No Connection for the weather data, please try again!')
+        else:
+
+            print(f'Failed to retrieve weather data. Status code: {response.status_code}')
+            return None, None, None, None
+
+    except requests.RequestException as e:
+
+        print(f'Error occurred while retrieving weather data: {e}')
+        return None, None, None, None
 
 
 def classify_weather_data(description, temperature, humidity, wind_speed):
