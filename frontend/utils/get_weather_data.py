@@ -4,7 +4,7 @@ import pickle
 import pandas as pd
 
 
-def get_weather_data(city, lat, lon):
+def get_weather_data(lat, lon):
 
     # Construct the API URL
     url = f'http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={OPEN_WEATHER_API_KEY}'
@@ -22,7 +22,7 @@ def get_weather_data(city, lat, lon):
         wind_speed = data['wind']['speed']
 
         # Print the weather information
-        print(f'Weather in {city}:')
+        # print(f'Weather in {city}:')
         print(f'Description: {weather_description}')
         print(f'Temperature: {temperature} K')
         print(f'Humidity: {humidity}%')
@@ -34,7 +34,7 @@ def get_weather_data(city, lat, lon):
         print('No Connection for the weather data, please try again!')
 
 
-def classify_weather(description, temperature, humidity, wind_speed):
+def classify_weather_data(description, temperature, humidity, wind_speed):
     # Initialize the dictionary to store the classified weather parameters
     weather_classification = {
         'Outlook_Overcast': [0],
