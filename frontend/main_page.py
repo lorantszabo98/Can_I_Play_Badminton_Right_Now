@@ -13,21 +13,34 @@ lat, lon = get_my_location()
 
 description, temperature, humidity, wind_speed = get_weather_data(lat, lon)
 
-st.caption('Weather data based :blue[on your location]:')
+if description is not None:
 
-col1, col2, col3, col4 = st.columns(4)
-col1.metric("Description", f'{str(description)} ')
-col2.metric("Temperature", f'{str(temperature)} K')
-col3.metric("Humidity", f'{str(humidity)} %')
-col4.metric("Wind Speed", f'{str(wind_speed)} m/s')
+    metrics_toogle = st.toggle('Switch to metric')
+    st.caption('Weather data based :blue[on your location]:')
 
-classification_result = classify_weather_data(description, temperature, humidity, wind_speed)
-current_weather = pd.DataFrame(classification_result)
+    if metrics_toogle:
+        # temperature, wind_speed = convert_metrics(temperature, wind_speed)
+        col1, col2, col3, col4 = st.columns(4)
+        col1.metric("Description", f'{str(description)} ')
+        col2.metric("Temperature", f'{str(round(temperature-273.15, 2))} °C')
+        col3.metric("Humidity", f'{str(humidity)} %')
+        col4.metric("Wind Speed", f'{str(round(wind_speed*3.6, 1))} km/h')
+    else:
+        col1, col2, col3, col4 = st.columns(4)
+        col1.metric("Description", f'{str(description)} ')
+        col2.metric("Temperature", f'{str(temperature)} K')
+        col3.metric("Humidity", f'{str(humidity)} %')
+        col4.metric("Wind Speed", f'{str(wind_speed)} m/s')
 
-dtree_model = pickle.load(open('./backend/trained_classifier_model/dt_model.sav', 'rb'))
-play_badminton_prediction = dtree_model.predict(current_weather)
+    classification_result = classify_weather_data(description, temperature, humidity, wind_speed)
+    current_weather = pd.DataFrame(classification_result)
 
-if play_badminton_prediction == 1:
-    st.success('Yes, you can play badminton!')
+    dtree_model = pickle.load(open('./backend/trained_classifier_model/dt_model.sav', 'rb'))
+    play_badminton_prediction = dtree_model.predict(current_weather)
+
+    if play_badminton_prediction == 1:
+        st.success('Yes, you can play badminton!')
+    else:
+        st.error('No, unfortunately the weather conditions are not suitable for badminton!')
 else:
-    st.error('No, unfortunately the weather conditions are not suitable for badminton!')
+    st.error('Failed to retrieve weather data. Please try again later.')
