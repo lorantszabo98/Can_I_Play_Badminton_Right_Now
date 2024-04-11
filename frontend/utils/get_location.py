@@ -3,7 +3,7 @@ from streamlit_js_eval import get_geolocation
 
 def get_my_location():
 
-    location = get_gelocation()
+    location = get_geolocation()
 
     if location is not None:
 
