@@ -1,7 +1,7 @@
-import geocoder
+from streamlit_js_eval import get_geolocation
 
 
 def get_my_location():
 
-    location = geocoder.ip('me')
-    return location.latlng[0], location.latlng[1]
+    location = get_geolocation()
+    return location['coords']['latitude'], location['coords']['longitude']
