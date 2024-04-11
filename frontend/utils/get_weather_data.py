@@ -1,13 +1,14 @@
 import requests
-from utils.API_KEYS import OPEN_WEATHER_API_KEY
+# from utils.API_KEYS import OPEN_WEATHER_API_KEY
 import pickle
 import pandas as pd
+import streamlit as st
 
 
 def get_weather_data(lat, lon):
 
     # Construct the API URL
-    url = f'http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={OPEN_WEATHER_API_KEY}'
+    url = f'http://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={st.secrets["OPEN_WEATHER_API_KEY"]}'
 
     try:
         # Send a GET request to the API
