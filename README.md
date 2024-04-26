@@ -9,7 +9,7 @@ This repository contains the backend and frontend code for an application that c
 
 3.  `get_weather_data.py`: Load the weather data using the `OPENWEATHERMAP API` and converts them to the desired format.
 
-4.  get_location.py`: Get the geolocation with this [package](https://github.com/aghasemi/streamlit_js_eval)
+4.  `get_location.py`: Get the geolocation with this [package](https://github.com/aghasemi/streamlit_js_eval)
 
 
 Demo
